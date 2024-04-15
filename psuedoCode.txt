@@ -1,0 +1,156 @@
+ROUND 1: BASIC OUTLINE
+CLASS ItemTracker
+    DECLARE a map for item frequencies
+
+    METHOD to load data from a file:
+        - OPEN file
+        - READ items from file
+        - UPDATE map with item frequencies
+
+    METHOD to retrieve item frequency:
+        - CHECK if item exists in map
+        - RETURN item frequency
+
+    METHOD to print all item frequencies:
+        - ITERATE through map
+        - PRINT each item and its frequency
+
+    METHOD to print histogram:
+        - ITERATE through map
+        - PRINT item followed by stars equal to its frequency
+
+
+START PROGRAM
+    CREATE instance of ItemTracker
+    LOAD data from 'items.txt' using instance
+
+    LOOP until user chooses to exit:
+        - DISPLAY menu options
+        - GET user choice
+        - HANDLE choice based on user input:
+            - CASE 1: Ask for item and display its frequency
+            - CASE 2: Display all frequencies
+            - CASE 3: Display histogram
+            - CASE 4: Exit program
+        - END CASE
+    END LOOP
+END PROGRAM
+
+
+
+DEFINE compiler settings and target executable
+DEFINE rules for compiling source files to object files
+DEFINE rule for linking object files into executable
+DEFINE clean rule for removing compiled files
+
+
+ROUND 2: PRE-CODE APPROACH
+CLASS ItemTracker
+    PRIVATE
+        MAP itemFrequencies // stores items as keys and frequencies as values
+
+    PUBLIC
+        METHOD loadDataFromFile(FILENAME)
+            // Reads items from a file and counts their frequencies
+
+        METHOD getItemFrequency(ITEM)
+            // Returns the frequency of the specified item
+
+        METHOD printAllFrequencies()
+            // Prints all items and their frequencies
+
+        METHOD printHistogram()
+            // Prints a histogram representation of item frequencies
+ENDCLASS
+
+INCLUDE ItemTracker.h
+
+METHOD loadDataFromFile(FILENAME)
+    OPEN FILE FILENAME
+    IF file is open
+        CLEAR itemFrequencies
+        WHILE not end of file
+            READ line into item
+            IF item is not empty
+                INCREMENT frequency of item in itemFrequencies
+        ENDWHILE
+    ELSE
+        PRINT "Error opening file"
+    ENDIF
+ENDMETHOD
+
+METHOD getItemFrequency(ITEM)
+    IF item exists in itemFrequencies
+        RETURN frequency of item
+    ELSE
+        RETURN 0
+    ENDIF
+ENDMETHOD
+
+METHOD printAllFrequencies()
+    FOR EACH pair in itemFrequencies
+        PRINT pair.key, pair.value
+    ENDFOR
+ENDMETHOD
+
+METHOD printHistogram()
+    FOR EACH pair in itemFrequencies
+        PRINT pair.key
+        PRINT '*' repeated pair.value times
+    ENDFOR
+ENDMETHOD
+
+INCLUDE ItemTracker.h
+
+START MAIN
+    CREATE an instance of ItemTracker
+    CALL loadDataFromFile with "items.txt"
+
+    DECLARE choice
+    DO
+        DISPLAY menu options
+        GET user input for choice
+        IF input is invalid
+            PRINT error message
+            CONTINUE loop
+        ENDIF
+
+        SWITCH choice
+            CASE 1:
+                PROMPT "Enter item name"
+                GET item
+                DISPLAY frequency of item
+            CASE 2:
+                CALL printAllFrequencies
+            CASE 3:
+                CALL printHistogram
+            CASE 4:
+                PRINT "Exiting program"
+                EXIT program
+            DEFAULT:
+                PRINT "Invalid choice"
+        ENDSWITCH
+    WHILE choice is not 4
+END MAIN
+
+
+# Define how to compile and link the program
+TARGET named ItemTrackerProgram
+COMPILER set to g++
+FLAGS set to standard C++11
+
+# Compile main and ItemTracker source files into object files
+# Link object files into the executable
+
+IF "make all"
+    LINK main.o and ItemTracker.o into ItemTrackerProgram
+ENDIF
+
+IF "make"
+    COMPILE main.cpp into main.o
+    COMPILE ItemTracker.cpp into ItemTracker.o
+ENDIF
+
+IF "make clean"
+    REMOVE ItemTrackerProgram, main.o, ItemTracker.o
+ENDIF
