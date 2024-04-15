@@ -1,5 +1,3 @@
-Creating a README file for your project is a great way to provide essential information about its purpose, setup, and usage. Below is a brief and concise README template for your ItemTracker C++ project, which assumes the presence of the Makefile and all necessary source files. You can customize this template according to the specifics of your project or environment requirements.
-
 ### README.md for ItemTracker Program
 
 ---
